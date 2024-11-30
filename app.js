@@ -1,16 +1,19 @@
-import http from 'http';
-import imageRouter from './routes/imageRoutes.js';
-import config from './config/config.js';
+import express from "express";
+import imageRoutes from "./routes/imageRoutes.js";
+import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
 
-const server = http.createServer((req, res) => {
-  if (req.url.startsWith('/image') || req.url.startsWith('/upload')) {
-    imageRouter(req, res);
-  } else {
-    res.writeHead(404, { 'Content-Type': 'text/plain' });
-    res.end('404 Not Found');
-  }
-});
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
-server.listen(config.port, () => {
-  console.log(`Server running at http://localhost:${config.port}`);
+const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+app.use("/api", imageRoutes);
+
+app.listen(3000, () => {
+  console.log("Server running at http://localhost:3000");
 });

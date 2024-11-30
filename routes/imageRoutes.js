@@ -1,15 +1,17 @@
-import {
-  uploadImage,
-  getResizedImage,
-} from "../controllers/imageController.js";
+import express from 'express';
+import multer from 'multer';
+import { uploadImage, getResizedImage } from '../controllers/imageController.js';
 
-export default (req, res) => {
-  if (req.url.startsWith("/upload") && req.method === "POST") {
-    uploadImage(req, res);
-  } else if (req.url.startsWith("/image") && req.method === "GET") {
-    getResizedImage(req, res);
-  } else {
-    res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end("Not Found");
-  }
-};
+const router = express.Router();
+const storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
+});
+const upload = multer({ storage });
+
+router.post('/upload', upload.single('image'), uploadImage);
+router.get('/image', getResizedImage);
+
+export default router;

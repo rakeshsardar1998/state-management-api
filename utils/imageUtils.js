@@ -1,11 +1,13 @@
-import { createCanvas, loadImage } from "canvas";
+import sharp from 'sharp';
 
-// Function to resize an image to the given dimensions
 export const resizeImage = async (imageBuffer, width, height) => {
-  const image = await loadImage(imageBuffer);
-  const canvas = createCanvas(width, height);
-  const ctx = canvas.getContext("2d");
-
-  ctx.drawImage(image, 0, 0, width, height);
-  return canvas.toBuffer("image/jpeg");
+  try {
+    const resizedImage = await sharp(imageBuffer)
+      .resize(width, height)
+      .toBuffer();
+    return resizedImage;
+  } catch (error) {
+    console.error('Error resizing image:', error);
+    throw error;
+  }
 };
