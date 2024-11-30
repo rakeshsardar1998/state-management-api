@@ -1,13 +1,13 @@
-import http from "http";
-import imageRouter from "./routes/imageRoutes.js";
-import config from "./config/config.js";
+import http from 'http';
+import imageRouter from './routes/imageRoutes.js';
+import config from './config/config.js';
 
 const server = http.createServer((req, res) => {
-  if (req.url.startsWith("/image") || req.url.startsWith("/upload")) {
+  if (req.url.startsWith('/image') || req.url.startsWith('/upload')) {
     imageRouter(req, res);
   } else {
-    res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end("404 Not Found");
+    res.writeHead(404, { 'Content-Type': 'text/plain' });
+    res.end('404 Not Found');
   }
 });
 
