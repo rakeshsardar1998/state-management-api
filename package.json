@@ -1,0 +1,16 @@
+{
+  "name": "state-management",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "start",
+    "start": "nodemon"
+  },
+  "author": " <Rakesh..........@/>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "nodemon": "^3.1.7"
+  }
+}
