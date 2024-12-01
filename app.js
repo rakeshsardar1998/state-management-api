@@ -1,16 +1,21 @@
-import http from "http";
-import imageRouter from "./routes/imageRoutes.js";
-import config from "./config/config.js";
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import imageRoutes from './routes/imageRoutes.js';
 
-const server = http.createServer((req, res) => {
-  if (req.url.startsWith("/image") || req.url.startsWith("/upload")) {
-    imageRouter(req, res);
-  } else {
-    res.writeHead(404, { "Content-Type": "text/plain" });
-    res.end("404 Not Found");
-  }
-});
+const app = express();
+const PORT = 3000;
 
-server.listen(config.port, () => {
-  console.log(`Server running at http://localhost:${config.port}`);
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/uploads', express.static('uploads'));
+
+// Routes
+app.use('/api', imageRoutes);
+
+// Start Server
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
