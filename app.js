@@ -1,19 +1,21 @@
-import express from "express";
-import imageRoutes from "./routes/imageRoutes.js";
-import path from "path";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import imageRoutes from './routes/imageRoutes.js';
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+const PORT = 3000;
 
-app.use("/api", imageRoutes);
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/uploads', express.static('uploads'));
 
-app.listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
+// Routes
+app.use('/api', imageRoutes);
+
+// Start Server
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });

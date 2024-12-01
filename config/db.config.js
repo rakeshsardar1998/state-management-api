@@ -1,11 +1,12 @@
-export default {
-  port: 3000,
-  db: {
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "statemanagement",
-    port: 3306,
-  },
-  imagePath: "./public/uploads/",
-};
+import mysql from 'mysql2/promise';
+import config from './config.js';
+
+const pool = mysql.createPool({
+  host: config.db.host,
+  user: config.db.user,
+  password: config.db.password,
+  database: config.db.database,
+  port: config.db.port,
+});
+
+export default pool;

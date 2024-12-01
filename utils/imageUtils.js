@@ -1,11 +1,9 @@
 import sharp from 'sharp';
 
-export const resizeImage = async (imageBuffer, width, height) => {
+// Resize image using sharp
+export const resizeImage = async (buffer, width, height) => {
   try {
-    const resizedImage = await sharp(imageBuffer)
-      .resize(width, height)
-      .toBuffer();
-    return resizedImage;
+    return await sharp(buffer).resize(width, height).toBuffer();
   } catch (error) {
     console.error('Error resizing image:', error);
     throw error;
