@@ -7,7 +7,7 @@ const UserModel = {
       const [result] = await pool.query(query, [
         userDetails.name,
         userDetails.email,
-        imagePath, // Save the image file name or path
+        imagePath, 
       ]);
       return result.insertId;
     } catch (error) {
@@ -64,7 +64,7 @@ const UserModel = {
       console.error("Error deleting user:", error);
       throw error;
     }
-  },
+  }
 };
 
 export default UserModel;
